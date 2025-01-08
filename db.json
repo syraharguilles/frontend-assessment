@@ -1,0 +1,51 @@
+{
+  "columnHeaders": {
+    "id": "Project ID",
+    "name": "Project Name",
+    "description": "description",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "manager": "Project Manager",
+    "favorites": "Favorites1",
+    "actions": "Edit"
+  },
+  "projects": [
+    {
+      "id": "1",
+      "name": "Project A_1",
+      "description": "This is the first project.",
+      "startDate": "2024-12-31",
+      "endDate": "2025-12-31",
+      "manager": "John Doe",
+      "favorites": true
+    },
+    {
+      "id": "2",
+      "name": "Project B_1",
+      "description": "This is the second project.",
+      "startDate": "2025-02-01",
+      "endDate": "2025-11-30",
+      "manager": "Jane Smith",
+      "favorites": false
+    },
+    {
+      "id": "3",
+      "name": "Project C",
+      "description": "This is the third project.",
+      "startDate": "2025-03-01",
+      "endDate": "2025-10-15",
+      "manager": "Mike Johnson",
+      "favorites": true
+    }
+  ],
+  "favorites": [
+    {
+      "id": "1",
+      "projectId": 1
+    },
+    {
+      "id": "2",
+      "projectId": 3
+    }
+  ]
+}
