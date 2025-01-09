@@ -6,13 +6,13 @@
     "startDate": "Start Date",
     "endDate": "End Date",
     "manager": "Project Manager",
-    "favorites": "Favorites1",
+    "favorites": "Favorites",
     "actions": "Edit"
   },
   "projects": [
     {
       "id": "1",
-      "name": "Project A_1",
+      "name": "Project A",
       "description": "This is the first project.",
       "startDate": "2024-12-31",
       "endDate": "2025-12-31",
@@ -21,12 +21,12 @@
     },
     {
       "id": "2",
-      "name": "Project B_1",
+      "name": "Project B",
       "description": "This is the second project.",
       "startDate": "2025-02-01",
       "endDate": "2025-11-30",
       "manager": "Jane Smith",
-      "favorites": false
+      "favorites": true
     },
     {
       "id": "3",
@@ -35,17 +35,7 @@
       "startDate": "2025-03-01",
       "endDate": "2025-10-15",
       "manager": "Mike Johnson",
-      "favorites": true
-    }
-  ],
-  "favorites": [
-    {
-      "id": "1",
-      "projectId": 1
-    },
-    {
-      "id": "2",
-      "projectId": 3
+      "favorites": false
     }
   ]
 }

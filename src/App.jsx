@@ -4,13 +4,13 @@ import Layout from './components/Layout/Layout';
 import ProjectListPage from './pages/ProjectListPage';
 import ProjectDetailPage from './pages/ProjectDetailPage';
 import ProjectsProvider from './context/ProjectsContext';
-import ColumnHeaders from './context/ColumnHeadersContext';
+import ColumnHeadersProvider from './context/ColumnHeadersContext';
 
 const App = () => {
   return (
     
       <ProjectsProvider>
-        <ColumnHeaders>
+        <ColumnHeadersProvider>
           <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <Layout>
               <Routes>
@@ -22,7 +22,7 @@ const App = () => {
               </Routes>
             </Layout>
           </Router>
-        </ColumnHeaders>
+        </ColumnHeadersProvider>
       </ProjectsProvider>
     
     
