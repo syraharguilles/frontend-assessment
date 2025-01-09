@@ -18,10 +18,10 @@ A responsive project management system built with React, Material-UI, and a JSON
 Before you begin, ensure you have the following installed on your system:
 
 - **Code Editor (Recommended: Visual Studio Code)**
- - Download and install Visual Studio Code for editing and running the project.
- - Open the terminal in VS Code:
- - Windows/Linux: Press `Ctrl + ``
- - MacOS: Press `Cmd + ``
+  - Download and install Visual Studio Code for editing and running the project.
+  - Open the terminal in VS Code:
+  - Windows/Linux: Press `Ctrl + ``
+  - MacOS: Press `Cmd + ``
  
 - **Node.js** (v18+)
   - Check if Node.js is installed:
