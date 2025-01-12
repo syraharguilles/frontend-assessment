@@ -30,34 +30,47 @@ Before you begin, ensure you have the following installed on your system:
     ```
   - If not installed, download and install it from the [official Node.js website](https://nodejs.org/).
 
-- **JSON Server** (for the mock API)
-  - Check if JSON Server is installed:
+- **Express Server** (for the mock API)
+  - Check if Express Server is installed:
     ```bash
-    json-server --version
+    
     ```
   - If not installed, you can install it globally:
     ```bash
-    npm install -g json-server@0.17.1
+    npm install express body-parser cors
     ```
 
 ### **Setup Instructions**
-1. **Clone the Repository: Open your terminal and run::**
+1. **Clone the Repository: Open your terminal and run**
    ```bash
    git clone https://github.com/syraharguilles/frontend-assessment.git
    cd frontend-assessment
+   ```
 
 2. **Install Dependencies:**
-    ```bash
+   ```bash
    npm install
+   ```
 
-3. **Start JSON Server: JSON Server will act as the mock backend.**
-    ```bash
-   json-server --watch db.json --port 3001
+3. **Start the Express Server: (Open another terminal or tab (do not close the first one running JSON Server), navigate to the root of the project directory, and start the React application by running:)**
+   Open a terminal and run:
+   ```bash
+   node server.js
+   ```
 
-4. **Run the Application: Start the React application.** (Open another terminal or tab (do not close the first one running JSON Server), navigate to the root of the project directory, and start the React application by running:)
-    ```bash
+4. **Run the Application:**
+   Open another terminal and start the React application:
+   ```bash
    npm start
+   ```
 
-5. **Access the Application: Open your browser and navigate to:**
-    ```bash
+5. **Access the Application:**
+   Open your browser and navigate to:
+   ```text
    http://localhost:3000
+   ```
+
+### **Benefits of Using Express:**
+- Greater flexibility for custom APIs.
+- Control over routes, middleware, and error handling.
+- Easily extensible for advanced use cases.
