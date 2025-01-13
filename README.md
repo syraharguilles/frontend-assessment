@@ -1,9 +1,9 @@
 # **Project Management System**
 
-A responsive project management system built with React, Material-UI, and a JSON Server backend. This application allows users to manage projects, update column headers dynamically, and maintain favorites.
+A responsive project management system built with React, Material-UI, and an Express.js backend. This application allows users to manage projects, update column headers dynamically, and maintain favorites.
 
 ## **Features**
-- Edit projects.
+- Edit project details.
 - Dynamic column headers with inline editing.
 - Mark projects as favorites.
 - Responsive design for desktop and mobile.
@@ -20,9 +20,9 @@ Before you begin, ensure you have the following installed on your system:
 - **Code Editor (Recommended: Visual Studio Code)**
   - Download and install Visual Studio Code for editing and running the project.
   - Open the terminal in VS Code:
-    - Windows/Linux: Press `Ctrl + ``
-    - MacOS: Press `Cmd + ``
- 
+    - **Windows/Linux**: Press `Ctrl + ```
+    - **MacOS**: Press `Cmd + ```
+
 - **Node.js** (v18+)
   - Check if Node.js is installed:
     ```bash
@@ -31,11 +31,7 @@ Before you begin, ensure you have the following installed on your system:
   - If not installed, download and install it from the [official Node.js website](https://nodejs.org/).
 
 - **Express Server** (for the mock API)
-  - Check if Express Server is installed:
-    ```bash
-    
-    ```
-  - If not installed, you can install it globally:
+  - Ensure the required dependencies are installed for running the server:
     ```bash
     npm install express body-parser cors
     ```
@@ -52,29 +48,37 @@ Before you begin, ensure you have the following installed on your system:
    npm install
    ```
 
-3. **Start the Express Server: (Open another terminal or tab (do not close the first one running JSON Server), navigate to the root of the project directory, and start the React application by running:)**
-   Open a terminal and run:
+3. **Run the Application**
+  - Using npm run dev (Recommended)
+    This script starts both the React application and the Express server concurrently. Open your terminal and run:
    ```bash
-   node server.js
+   npm run dev
    ```
 
-4. **Run the Application:**
-   Open another terminal and start the React application:
-   ```bash
-   npm start
-   ```
+  - If you prefer to run the React application and Express server separately, follow these steps:
 
-5. **Access the Application:**
+    - Start the Express Server
+      Open a terminal, navigate to the project directory, and run:
+      ```bash
+      npm run server
+      ```
+    - Start the React Application
+      Open another terminal, navigate to the project directory, and run:
+      ```bash
+      npm start
+      ```
+  
+  - React App will run on http://localhost:3000.
+  - Express Server (mock API) will run on http://localhost:3001.
+
+4. **Access the Application:**
    Open your browser and navigate to:
+   - Application
    ```text
    http://localhost:3000
    ```
 
-### **Benefits of Using Express:**
-- Greater flexibility for custom APIs.
-- Control over routes, middleware, and error handling.
-- Easily extensible for advanced use cases.
-
-## Access the Application
-Open your browser and navigate to:
-- Default: [http://localhost:3000/projects](http://localhost:3000/projects)
+   - Server
+   ```text
+   http://localhost:3001
+   ```
