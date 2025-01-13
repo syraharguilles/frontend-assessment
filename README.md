@@ -3,7 +3,7 @@
 A responsive project management system built with React, Material-UI, and an Express.js backend. This application allows users to manage projects, update column headers dynamically, and maintain favorites.
 
 ## **Features**
-- Edit project details.
+- Create, edit and display project details.
 - Dynamic column headers with inline editing.
 - Mark projects as favorites.
 - Responsive design for desktop and mobile.
