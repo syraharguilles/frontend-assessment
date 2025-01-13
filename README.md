@@ -42,10 +42,10 @@ Before you begin, ensure you have the following installed on your system:
       -- (empty)
       ```
 
-    - Run this script to install the express:
-    ```bash
-    npm install express body-parser cors
-    ```
+      - Run this script to install the express:
+        ```bash
+        npm install express body-parser cors
+        ```
 
 ### **Setup Instructions**
 1. **Clone the Repository: Open your terminal and run**
