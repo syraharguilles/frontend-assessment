@@ -63,7 +63,7 @@ app.get('/projects', (req, res) => {
 
 app.post('/projects', validateProject, (req, res) => {
   try {
-    const newId = projects.length > 0 ? Math.max(...projects.map((p) => p.id)) + 1 : 1;
+    const newId = String(projects.length > 0 ? Math.max(...projects.map((p) => parseInt(p.id, 10))) + 1 : 1);
     const newProject = { ...req.body, id: newId };
     projects.push(newProject);
     writeDb({ projects, columnHeaders });
@@ -73,28 +73,30 @@ app.post('/projects', validateProject, (req, res) => {
   }
 });
 
-app.put('/projects/:id', (req, res) => {
-  console.log('Received PUT request:', req.params.id, req.body); // Log ID and body
+app.put('/projects/:id', validateProject, (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedProject = req.body;
 
-  const { id } = req.params;
-  const updatedProject = req.body;
+    // Find the index of the project to update
+    const projectIndex = projects.findIndex((project) => project.id == id);
+    if (projectIndex === -1) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
 
-  // Find the index of the project to update
-  const projectIndex = projects.findIndex((project) => parseInt(project.id) === parseInt(id, 10));
-  if (projectIndex === -1) {
-    return res.status(404).json({ message: 'Project not found' });
+    // Update the project
+    projects[projectIndex] = updatedProject;
+    writeDb({ projects, columnHeaders });
+    res.json(updatedProject);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to update project', error: error.message });
   }
-
-  // Update the project
-  projects[projectIndex] = updatedProject;
-  writeDb({ projects, columnHeaders }); // Persist changes to db.json
-  res.json(updatedProject);
 });
 
 app.delete('/projects/:id', (req, res) => {
   try {
     const { id } = req.params;
-    const projectIndex = projects.findIndex((project) => parseInt(project.id) === parseInt(id));
+    const projectIndex = projects.findIndex((project) => project.id == id);
 
     if (projectIndex === -1) {
       return res.status(404).json({ message: 'Project not found' });

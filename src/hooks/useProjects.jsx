@@ -45,7 +45,7 @@ const useProjects = () => {
     try {
       const updated = await updateProject(id, updatedProject);
       setProjects((prev) =>
-        prev.map((project) => (project.id === id ? updated : project))
+        prev.map((project) => (project.id == id ? updated : project))
       );
       return updated;
     } catch (err) {
@@ -56,7 +56,7 @@ const useProjects = () => {
   const removeProject = async (id) => {
     try {
       await deleteProject(id);
-      setProjects((prev) => prev.filter((project) => project.id !== id));
+      setProjects((prev) => prev.filter((project) => project.id != id));
       return id;
     } catch (err) {
       handleError(err);
@@ -65,20 +65,20 @@ const useProjects = () => {
 
   const toggleFavorite = async (id) => {
     try {
-      const projectToToggle = projects.find((project) => parseInt(project.id, 10) === parseInt(id, 10));
+      const projectToToggle = projects.find((project) => project.id == id);
       if (!projectToToggle) {
         console.error(`Project with ID ${id} not found`);
         throw new Error('Project not found');
       }
-  
+
       const updatedProject = {
         ...projectToToggle,
         favorites: !projectToToggle.favorites,
       };
-  
-      const updated = await updateProject(parseInt(id, 10), updatedProject); // Ensure ID is a number
+
+      const updated = await updateProject(id, updatedProject); // Use `id` as a string
       setProjects((prev) =>
-        prev.map((project) => (parseInt(project.id, 10) === parseInt(id, 10) ? updated : project))
+        prev.map((project) => (project.id == id ? updated : project))
       );
     } catch (err) {
       console.error('Error toggling favorite:', err.message);
@@ -94,7 +94,7 @@ const useProjects = () => {
     addProject,
     updateProject: updateProjectDetails,
     deleteProject: removeProject,
-    toggleFavorite
+    toggleFavorite,
   };
 };
 

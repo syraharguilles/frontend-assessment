@@ -15,12 +15,12 @@ const ProjectDetails = () => {
   useEffect(() => {
     const fetchProjectDetails = async () => {
       try {
-        const existingProject = projects.find((p) => p.id === id);
+        const existingProject = projects.find((p) => p.id == id);
         if (existingProject) {
           setProject(existingProject);
         } else {
           await fetchProjects();
-          const fetchedProject = projects.find((p) => p.id === id);
+          const fetchedProject = projects.find((p) => p.id == id);
           if (fetchedProject) {
             setProject(fetchedProject);
           } else {

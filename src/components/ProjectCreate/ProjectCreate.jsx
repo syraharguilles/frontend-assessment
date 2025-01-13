@@ -3,7 +3,7 @@ import { TextField, Button, Box, FormControlLabel, Checkbox, Typography } from '
 
 const ProjectForm = ({ onSave, onClose }) => {
   const [formData, setFormData] = useState({
-    id: '',
+    id: '', // Ensure id is treated as a string
     name: '',
     description: '', // Added description field
     startDate: '',
@@ -26,7 +26,11 @@ const ProjectForm = ({ onSave, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await onSave(formData);
+      // Ensure the `id` remains a string when passed to the onSave function
+      await onSave({
+        ...formData,
+        id: String(formData.id).trim(), // Convert id to a trimmed string
+      });
     } catch (error) {
       setError(error.message);
     }
@@ -59,6 +63,7 @@ const ProjectForm = ({ onSave, onClose }) => {
         value={formData.id}
         onChange={handleChange}
         fullWidth
+        helperText="Enter a unique identifier (can be a string)."
       />
       <TextField
         label="Project Name"
