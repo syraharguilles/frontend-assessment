@@ -33,6 +33,17 @@ Before you begin, ensure you have the following installed on your system:
 - **Express Server** (for the mock API)
   - Ensure the required dependencies are installed for running the server:
     ```bash
+    npm list express
+    ```
+    - If Express is installed, this command will output the installed version of Express.
+    
+    - If Express is not installed, you will see a message similar to:
+      ```bash
+      -- (empty)
+      ```
+
+    - Run this script to install the express:
+    ```bash
     npm install express body-parser cors
     ```
 
@@ -51,9 +62,9 @@ Before you begin, ensure you have the following installed on your system:
 3. **Run the Application**
   - Using npm run dev (Recommended)
     This script starts both the React application and the Express server concurrently. Open your terminal and run:
-   ```bash
-   npm run dev
-   ```
+    ```bash
+    npm run dev
+    ```
 
   - If you prefer to run the React application and Express server separately, follow these steps:
 
