@@ -55,20 +55,11 @@
       "favorites": false
     },
     {
-      "id": 7,
-      "name": "Project 7",
-      "description": "Description Project 7",
-      "startDate": "2025-01-20",
-      "endDate": "2025-01-22",
-      "manager": "John ",
-      "favorites": false
-    },
-    {
-      "id": 8,
+      "id": "test7",
       "name": "testt",
-      "description": "test",
-      "startDate": "2025-01-13",
-      "endDate": "2025-01-14",
+      "description": "test desc",
+      "startDate": "2025-01-14",
+      "endDate": "2025-01-15",
       "manager": "test",
       "favorites": true
     }

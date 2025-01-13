@@ -63,10 +63,21 @@ app.get('/projects', (req, res) => {
 
 app.post('/projects', validateProject, (req, res) => {
   try {
-    const newId = String(projects.length > 0 ? Math.max(...projects.map((p) => parseInt(p.id, 10))) + 1 : 1);
-    const newProject = { ...req.body, id: newId };
-    projects.push(newProject);
-    writeDb({ projects, columnHeaders });
+    // Ensure the ID is provided in the request body as a string
+    if (!req.body.id || typeof req.body.id !== 'string') {
+      return res.status(400).json({ message: 'Invalid or missing project ID. It must be a string.' });
+    }
+
+    const newProject = { ...req.body };
+    
+    // Check if the ID is unique
+    const existingProject = projects.find((p) => p.id === newProject.id);
+    if (existingProject) {
+      return res.status(400).json({ message: `Project ID "${newProject.id}" already exists.` });
+    }
+
+    projects.push(newProject); // Add the new project
+    writeDb({ projects, columnHeaders }); // Persist to db.json
     res.status(201).json(newProject);
   } catch (error) {
     res.status(500).json({ message: 'Failed to create project', error: error.message });
