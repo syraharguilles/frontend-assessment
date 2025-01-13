@@ -1,52 +1,135 @@
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import fs from 'fs';
+import path from 'path';
+import morgan from 'morgan';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 const port = 3001;
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+app.use(morgan('dev'));
 
-// Mock data
-let projects = [
-  { id: 1, name: 'Project A', startDate: '2023-01-01', endDate: '2023-12-31', manager: 'John Doe', favorites: false },
-  { id: 2, name: 'Project B', startDate: '2023-06-01', endDate: '2023-12-31', manager: 'Jane Smith', favorites: true },
-];
+// File path to db.json
+const dbPath = path.join(__dirname, 'db.json');
 
-let columnHeaders = {
-  id: 'Project ID',
-  name: 'Project Name',
-  startDate: 'Start Date',
-  endDate: 'End Date',
-  manager: 'Project Manager',
-  favorites: 'Favorites',
-  actions: 'Edit',
+// Function to read data from db.json
+const readDb = () => {
+  try {
+    const data = fs.readFileSync(dbPath, 'utf-8');
+    return JSON.parse(data);
+  } catch (error) {
+    console.error('Failed to read database:', error.message);
+    return { projects: [], columnHeaders: {} };
+  }
+};
+
+// Function to write data to db.json
+const writeDb = (data) => {
+  try {
+    fs.writeFileSync(dbPath, JSON.stringify(data, null, 2), 'utf-8');
+  } catch (error) {
+    console.error('Failed to write to database:', error.message);
+  }
+};
+
+// Load initial data
+let { projects, columnHeaders } = readDb();
+
+// Validation Middleware
+const validateProject = (req, res, next) => {
+  const { name, startDate, endDate, manager } = req.body;
+  if (!name || !startDate || !endDate || !manager) {
+    return res.status(400).json({ message: 'Missing required fields: name, startDate, endDate, manager are mandatory.' });
+  }
+  next();
 };
 
 // Routes
-app.get('/projects', (req, res) => res.json(projects));
-app.post('/projects', (req, res) => {
-  const newProject = { ...req.body, id: projects.length + 1 };
-  projects.push(newProject);
-  res.json(newProject);
-});
-app.put('/projects/:id', (req, res) => {
-  const { id } = req.params;
-  const updatedProject = req.body;
-  projects = projects.map((project) => (project.id === parseInt(id) ? updatedProject : project));
-  res.json(updatedProject);
-});
-app.delete('/projects/:id', (req, res) => {
-  const { id } = req.params;
-  projects = projects.filter((project) => project.id !== parseInt(id));
-  res.json({ message: 'Project deleted' });
+app.get('/projects', (req, res) => {
+  try {
+    res.json(projects);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch projects', error: error.message });
+  }
 });
 
-app.get('/columnHeaders', (req, res) => res.json(columnHeaders));
+app.post('/projects', validateProject, (req, res) => {
+  try {
+    const newId = projects.length > 0 ? Math.max(...projects.map((p) => p.id)) + 1 : 1;
+    const newProject = { ...req.body, id: newId };
+    projects.push(newProject);
+    writeDb({ projects, columnHeaders });
+    res.status(201).json(newProject);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to create project', error: error.message });
+  }
+});
+
+app.put('/projects/:id', (req, res) => {
+  console.log('Received PUT request:', req.params.id, req.body); // Log ID and body
+
+  const { id } = req.params;
+  const updatedProject = req.body;
+
+  // Find the index of the project to update
+  const projectIndex = projects.findIndex((project) => parseInt(project.id) === parseInt(id, 10));
+  if (projectIndex === -1) {
+    return res.status(404).json({ message: 'Project not found' });
+  }
+
+  // Update the project
+  projects[projectIndex] = updatedProject;
+  writeDb({ projects, columnHeaders }); // Persist changes to db.json
+  res.json(updatedProject);
+});
+
+app.delete('/projects/:id', (req, res) => {
+  try {
+    const { id } = req.params;
+    const projectIndex = projects.findIndex((project) => parseInt(project.id) === parseInt(id));
+
+    if (projectIndex === -1) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+
+    projects.splice(projectIndex, 1);
+    writeDb({ projects, columnHeaders });
+    res.json({ message: 'Project deleted' });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to delete project', error: error.message });
+  }
+});
+
+app.get('/columnHeaders', (req, res) => {
+  try {
+    res.json(columnHeaders);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch column headers', error: error.message });
+  }
+});
+
 app.put('/columnHeaders', (req, res) => {
-  columnHeaders = { ...columnHeaders, ...req.body };
-  res.json(columnHeaders);
+  try {
+    columnHeaders = { ...columnHeaders, ...req.body };
+    writeDb({ projects, columnHeaders });
+    res.json(columnHeaders);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to update column headers', error: error.message });
+  }
+});
+
+// Error Handler Middleware
+app.use((err, req, res, next) => {
+  console.error('Unhandled Error:', err.message);
+  res.status(500).json({ message: 'An unexpected error occurred', error: err.message });
 });
 
 // Start server

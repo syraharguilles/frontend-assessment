@@ -1,15 +1,19 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button, Typography, Box, Grid } from '@mui/material';
 import ProjectTable from './ProjectTable';
-import Typography from '@mui/material/Typography';
-import { ProjectsContext } from '../../context/ProjectsContext';
+import { ProjectsContext } from '../../context/ProjectsContext.jsx';
 
 const ProjectList = () => {
   const navigate = useNavigate();
   const { projects, loading, error, fetchProjects } = useContext(ProjectsContext);
 
+  const handleCreateProject = () => {
+    navigate('/projects/new');
+  };
+
   const handleEdit = (projectId) => {
-    navigate(`/projects/${projectId}`);
+    navigate(`/projects/${projectId}/edit`);
   };
 
   if (loading) {
@@ -18,22 +22,46 @@ const ProjectList = () => {
 
   if (error) {
     return (
-      <div>
-        <p>Error: {error}</p>
-        <button onClick={fetchProjects} disabled={loading}>
+      <Box>
+        <Typography variant="body1" color="error">
+          Error: {error}
+        </Typography>
+        <Button onClick={fetchProjects} disabled={loading}>
           {loading ? 'Retrying...' : 'Retry'}
-        </button>
-      </div>
+        </Button>
+      </Box>
     );
   }
 
   return (
-    <div>
-      <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-        Project List
-      </Typography>
-      <ProjectTable projects={projects} onEdit={handleEdit} />
-    </div>
+    <Box sx={{ flexGrow: 1, padding: 2 }}>
+      <Grid container spacing={2}>
+        {/* Left Column */}
+        <Grid item xs={12} md={8}>
+          <Typography variant="h5" component="div" sx={{ marginBottom: 2 }}>
+            Project List
+          </Typography>
+        </Grid>
+
+        {/* Right Column */}
+        <Grid item xs={12} md={4}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleCreateProject}
+            sx={{ marginBottom: 2 }}
+          >
+            Create Project
+          </Button>
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <ProjectTable projects={projects} onEdit={handleEdit} />
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 

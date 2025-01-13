@@ -63,6 +63,29 @@ const useProjects = () => {
     }
   };
 
+  const toggleFavorite = async (id) => {
+    try {
+      const projectToToggle = projects.find((project) => parseInt(project.id, 10) === parseInt(id, 10));
+      if (!projectToToggle) {
+        console.error(`Project with ID ${id} not found`);
+        throw new Error('Project not found');
+      }
+  
+      const updatedProject = {
+        ...projectToToggle,
+        favorites: !projectToToggle.favorites,
+      };
+  
+      const updated = await updateProject(parseInt(id, 10), updatedProject); // Ensure ID is a number
+      setProjects((prev) =>
+        prev.map((project) => (parseInt(project.id, 10) === parseInt(id, 10) ? updated : project))
+      );
+    } catch (err) {
+      console.error('Error toggling favorite:', err.message);
+      handleError(err);
+    }
+  };
+
   return {
     projects,
     loading,
@@ -71,6 +94,7 @@ const useProjects = () => {
     addProject,
     updateProject: updateProjectDetails,
     deleteProject: removeProject,
+    toggleFavorite
   };
 };
 

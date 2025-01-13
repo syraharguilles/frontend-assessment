@@ -12,6 +12,7 @@ const ProjectsProvider = ({ children }) => {
     addProject,
     updateProject,
     deleteProject,
+    toggleFavorite
   } = useProjects();
 
   const fetchProjects = useCallback(() => {
@@ -30,7 +31,8 @@ const ProjectsProvider = ({ children }) => {
     addProject,
     updateProject,
     deleteProject,
-  }), [projects, loading, error, fetchProjects, addProject, updateProject, deleteProject]);
+    toggleFavorite
+  }), [projects, loading, error, fetchProjects, addProject, updateProject, deleteProject, toggleFavorite]);
 
   return (
     <ProjectsContext.Provider value={contextValue}>

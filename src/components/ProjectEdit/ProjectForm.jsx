@@ -120,17 +120,6 @@ const ProjectForm = ({ project, onSave, onClose }) => {
         required
         fullWidth
       />
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={formData.favorites}
-            onChange={handleCheckboxChange}
-            color="primary"
-          />
-        }
-        label="Favorite"
-        sx={{ marginLeft: 0 }}
-      />
       <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
         <Button
           variant="contained"

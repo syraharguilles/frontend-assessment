@@ -1,18 +1,28 @@
 import React from 'react';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import Button from '@mui/material/Button';
+import { IconButton, TableRow, TableCell, Button } from '@mui/material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { ProjectsContext } from '../../context/ProjectsContext.jsx';
 
 const ProjectRow = ({ project, onEdit }) => {
+  const { toggleFavorite } = useContext(ProjectsContext);
+
+  const handleToggleFavorite = () => {
+    toggleFavorite(project.id);
+  };
+
   return (
     <TableRow>
       <TableCell>{project.id}</TableCell>
       <TableCell>{project.name}</TableCell>
-      <TableCell>{project.description}</TableCell>
       <TableCell>{project.startDate}</TableCell>
       <TableCell>{project.endDate}</TableCell>
       <TableCell>{project.manager}</TableCell>
-      <TableCell>{project.favorites === true ? 'Yes' : 'No'}</TableCell>
+      <TableCell>
+        <IconButton onClick={handleToggleFavorite} size="small">
+          {project.favorites ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
+        </IconButton>
+      </TableCell>
       <TableCell>
         <Button
           variant="contained"

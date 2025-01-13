@@ -74,3 +74,7 @@ Before you begin, ensure you have the following installed on your system:
 - Greater flexibility for custom APIs.
 - Control over routes, middleware, and error handling.
 - Easily extensible for advanced use cases.
+
+## Access the Application
+Open your browser and navigate to:
+- Default: [http://localhost:3000/projects](http://localhost:3000/projects)

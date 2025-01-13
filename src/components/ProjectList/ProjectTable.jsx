@@ -14,11 +14,15 @@ import {
   Paper,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import { ColumnHeadersContext } from '../../context/ColumnHeadersContext';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { ColumnHeadersContext } from '../../context/ColumnHeadersContext.jsx';
+import { ProjectsContext } from '../../context/ProjectsContext.jsx';
 
-const ProjectTable = ({ projects, onEdit }) => {
+const ProjectTable = ({ onEdit }) => {
   // Get column headers and updateHeader from the ColumnHeadersContext
   const { columnHeaders, updateHeader } = useContext(ColumnHeadersContext);
+  const { projects, updateProject } = useContext(ProjectsContext);
 
   // State to track which header is being edited
   const [editingHeader, setEditingHeader] = useState(null);
@@ -40,6 +44,19 @@ const ProjectTable = ({ projects, onEdit }) => {
     if (editingHeader) {
       updateHeader(editingHeader, tempHeader); // Update the header in the context
       setEditingHeader(null); // Exit edit mode
+    }
+  };
+
+  // Toggle project favorite status
+  const handleToggleFavorite = async (projectId, isFavorite) => {
+    try {
+      const updatedProject = {
+        ...projects.find((p) => p.id === projectId),
+        favorites: isFavorite,
+      };
+      await updateProject(projectId, updatedProject); // Update the project in the backend
+    } catch (err) {
+      console.error('Error updating favorite:', err);
     }
   };
 
@@ -91,7 +108,36 @@ const ProjectTable = ({ projects, onEdit }) => {
         {/* Table Body */}
         <TableBody>
           {projects.map((project) => (
-            <ProjectRow key={project.id} project={project} onEdit={onEdit} />
+            <TableRow key={project.id}>
+              <TableCell>{project.id}</TableCell>
+              <TableCell>{project.name}</TableCell>
+              <TableCell>{project.startDate}</TableCell>
+              <TableCell>{project.endDate}</TableCell>
+              <TableCell>{project.manager}</TableCell>
+              <TableCell align="center">
+                <Tooltip
+                  title={project.favorites ? 'Remove from Favorites' : 'Add to Favorites'}
+                  placement="top"
+                >
+                  <IconButton
+                    onClick={() => handleToggleFavorite(project.id, !project.favorites)}
+                    color={project.favorites ? 'primary' : 'default'}
+                  >
+                    {project.favorites ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                  </IconButton>
+                </Tooltip>
+              </TableCell>
+              <TableCell>
+                <Button
+                  onClick={() => onEdit(project.id)}
+                  size="small"
+                  variant="contained"
+                  color="primary"
+                >
+                  Edit
+                </Button>
+              </TableCell>
+            </TableRow>
           ))}
         </TableBody>
       </Table>

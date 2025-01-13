@@ -1,19 +1,9 @@
 {
-  "columnHeaders": {
-    "id": "Project ID",
-    "name": "Project Name",
-    "description": "description",
-    "startDate": "Start Date",
-    "endDate": "End Date",
-    "manager": "Project Manager",
-    "favorites": "Favorites",
-    "actions": "Edit"
-  },
   "projects": [
     {
       "id": "1",
-      "name": "Project A",
-      "description": "This is the first project.",
+      "name": "Project A_1",
+      "description": "This is description of Project A",
       "startDate": "2024-12-31",
       "endDate": "2025-12-31",
       "manager": "John Doe",
@@ -22,7 +12,7 @@
     {
       "id": "2",
       "name": "Project B",
-      "description": "This is the second project.",
+      "description": "This is description of Project B_1",
       "startDate": "2025-02-01",
       "endDate": "2025-11-30",
       "manager": "Jane Smith",
@@ -31,11 +21,38 @@
     {
       "id": "3",
       "name": "Project C",
-      "description": "This is the third project.",
+      "description": "This is description of Project C",
       "startDate": "2025-03-01",
       "endDate": "2025-10-15",
       "manager": "Mike Johnson",
       "favorites": false
+    },
+    {
+      "id": "4",
+      "name": "Project D",
+      "description": "",
+      "startDate": "2025-01-14",
+      "endDate": "2025-01-17",
+      "manager": "Jessie",
+      "favorites": false
+    },
+    {
+      "id": 5,
+      "name": "Project E",
+      "description": "Description E",
+      "startDate": "2025-01-15",
+      "endDate": "2025-01-17",
+      "manager": "Test",
+      "favorites": true
     }
-  ]
+  ],
+  "columnHeaders": {
+    "id": "Project ID",
+    "name": "Project Name",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "manager": "Project Manager",
+    "favorites": "Favorites1",
+    "actions": "Actions"
+  }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import ProjectsProvider from './context/ProjectsContext';
-import ColumnHeadersProvider from './context/ColumnHeadersContext'; // Ensure proper naming
+import App from './App.jsx';
+import ProjectsProvider from './context/ProjectsContext.jsx';
+import ColumnHeadersProvider from './context/ColumnHeadersContext.jsx'; // Ensure proper naming
 
 
 

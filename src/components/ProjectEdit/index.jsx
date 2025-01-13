@@ -1,13 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
-import ProjectDetailsReadOnly from './ProjectDetails.jsx';
+import ProjectForm from './ProjectForm.jsx';
 import { ProjectsContext } from '../../context/ProjectsContext.jsx';
 
 const ProjectDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { projects, fetchProjects, loading } = useContext(ProjectsContext);
+  const { projects, fetchProjects, updateProject, loading } = useContext(ProjectsContext);
 
   const [project, setProject] = useState(null);
   const [error, setError] = useState(null);
@@ -15,12 +15,13 @@ const ProjectDetails = () => {
   useEffect(() => {
     const fetchProjectDetails = async () => {
       try {
-        const existingProject = projects.find((p) => p.id === id);
+        const existingProject = projects.find((p) => parseInt(p.id) === parseInt(id));
         if (existingProject) {
           setProject(existingProject);
         } else {
+          // Ensure fetchProjects is completed
           await fetchProjects();
-          const fetchedProject = projects.find((p) => p.id === id);
+          const fetchedProject = projects.find((p) => parseInt(p.id) === parseInt(id));
           if (fetchedProject) {
             setProject(fetchedProject);
           } else {
@@ -35,19 +36,28 @@ const ProjectDetails = () => {
     fetchProjectDetails();
   }, [id, projects, fetchProjects]);
 
-  if (loading) return <div>Loading...</div>;
+  const handleSave = async (updatedProject) => {
+    try {
+      await updateProject(updatedProject.id, updatedProject);
+      navigate('/');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  if (loading && !project) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-  if (!project) return <div>No project data available.</div>; // Handle null project
 
   return (
-    <div style={{  maxWidth: { xs: '100%', sm: '100%' } }}>
-      <Typography variant="h5" component="div" sx={{ flexGrow: 1, marginBottom: 3 }}>
-        Project Details
+    <div>
+      <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+        Edit Project Details
       </Typography>
-      <ProjectDetailsReadOnly
+      <ProjectForm
+        projectId={id}
         project={project}
-        onEdit={() => navigate(`/projects/${id}/edit`)}
-        onBack={() => navigate('/projects')}
+        onSave={handleSave}
+        onClose={() => navigate('/')}
       />
     </div>
   );

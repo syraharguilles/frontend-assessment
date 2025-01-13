@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
-import { ProjectsContext } from '../../context/ProjectsContext';
-import { ColumnHeadersContext } from '../../context/ColumnHeadersContext';
+import { ProjectsContext } from '../../context/ProjectsContext.jsx';
+import { ColumnHeadersContext } from '../../context/ColumnHeadersContext.jsx';
 import { Box, Typography, List, ListItem, ListItemText } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const SideBar = () => {
   const { projects } = useContext(ProjectsContext);
@@ -16,7 +17,7 @@ const SideBar = () => {
   return (
     <Box
       sx={{
-        wwidth: { xs: '100%', sm: '250px' },
+        width: { xs: '100%', sm: '250px' },
         padding: 2,
         display: 'flex',
         flexDirection: 'column',
@@ -31,7 +32,12 @@ const SideBar = () => {
         <List>
           {favoriteProjects.map((project) => (
             <ListItem key={project.id} sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <ListItemText primary={project.name} />
+              <Link
+                    to={`/projects/${project.id}`}
+                    style={{ textDecoration: 'none', color: 'inherit' }}
+                  >
+                    <Typography>{project.name}</Typography>
+              </Link>
             </ListItem>
           ))}
         </List>
