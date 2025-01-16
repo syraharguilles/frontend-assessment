@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import ProjectRow from './ProjectRow';
 import {
   Table,
   TableHead,

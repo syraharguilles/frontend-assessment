@@ -62,6 +62,15 @@
       "endDate": "2025-01-15",
       "manager": "test",
       "favorites": true
+    },
+    {
+      "id": "8",
+      "name": "Project F",
+      "description": "Description project f",
+      "startDate": "2025-01-16",
+      "endDate": "2025-01-18",
+      "manager": "John1",
+      "favorites": true
     }
   ],
   "columnHeaders": {
